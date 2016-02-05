@@ -246,6 +246,10 @@ font-weight: 700;
 
 /* ================ Header Section ================ */
 
+.effects-navbar {
+    background: #565656 !important;
+}
+
 .header-section {
 	position:relative;
 }
