@@ -246,6 +246,36 @@ font-weight: 700;
 
 /* ================ Header Section ================ */
 
+#dropbox {
+    border: solid 1px red;
+    width: 200px;
+    height: 200px;
+}
+
+div.filebutton {
+    width:200px;
+    height:200px;
+    overflow:hidden;
+    position:relative;
+    background-color:#ccc;
+}
+
+label span input {
+    z-index: 999;
+    line-height: 0;
+    font-size: 50px;
+    position: absolute;
+    top: -2px;
+    left: -700px;
+    opacity: 0;
+    filter: alpha(opacity = 0);
+    -ms-filter: "alpha(opacity=0)";
+    cursor: pointer;
+    _cursor: hand;
+    margin: 0;
+    padding:0;
+}
+
 .effects-navbar {
     background: #565656 !important;
 }
