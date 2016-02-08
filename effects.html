@@ -79,9 +79,12 @@
 
         <!-- Portfolio Item Row -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6 col-md-offset-3">
                 <div id="image-wrapper">
-                    <div class="col-sm-12 col-xs-6 center-block vcenter">
+                    <span class="original-image-cover">
+                        <button id="save-button" onclick="saveFilteredImage()" class="btn btn-default" type="button"><h6>Save image</h6></button>
+                    </span>
+                    <div class="col-sm-12 col-xs-6 vcenter">
                         <img id="original-image" class="img-responsive" src="images/empty.png" alt="">
                     </div>
                 </div>
@@ -279,17 +282,27 @@
                 reader.readAsDataURL(image);
             }
 
+            function pictureLoaded() {
+                var filepathOfFileInOriginalImageTag = document.getElementById('original-image').src;
+                if (typeof filepathOfFileInOriginalImageTag != 'undefined') {
+                    var filenameOfFileInOriginalImageTag = getFilename(filepathOfFileInOriginalImageTag);
+                    if (filenameOfFileInOriginalImageTag == 'empty.png') {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function getFilename(filepath) {
+                return filepath.split('\\').pop().split('/').pop();
+            }
+
             var filterCovers = document.getElementsByClassName('filter-cover');
             for (var i = 0; i < filterCovers.length; i++) {
                 var filterCover = $('#' + filterCovers[i].id);
                 filterCover.on('click', function(e) {
-                    var filepathOfFileInOriginalImageTag = document.getElementById('original-image').src;
-                    if (typeof filepathOfFileInOriginalImageTag != 'undefined') {
-                        var filenameOfFileInOriginalImageTag = filepathOfFileInOriginalImageTag.split('\\').pop().split('/').pop();
-                        if (filenameOfFileInOriginalImageTag == 'empty.png') {
-                            return;
-                        }
-                    }
+                    if (!pictureLoaded())
+                        return;
                     return function(filterCoverId) {
                         Caman('#original-image', function(filterName) {
                             return function() {
@@ -299,32 +312,29 @@
                             };
                         }(filterCoverId));
                     }(e.target.id == '' ? e.target.parentElement.id : e.target.id);
-                });/*function(filterCoverId) {
-                    return function() {
-                        Caman('#original-image', function(filterName) {
-                            return function() {
-                                this[filterName]();
-                                this.render();
-                            };
-                        }(filterCoverId));
-                    }
-                }(filterCovers[i].id);*/
+                });
             }
 
-            /*var dirtyFilters = document.getElementById('filters').children;
-            for (var dirtyFilterIndex = 0; dirtyFilterIndex < dirtyFilters.length; dirtyFilterIndex++) {
-                dirtyFilter = dirtyFilters[dirtyFilterIndex];
-                if (dirtyFilter.id == 'filters-header')
-                    continue;
-                var filterName = dirtyFilter.children[0].id;
-                var filterImageId = '#' + filterName;
-                Caman(filterImageId, function(filterName) {
-                    return function() {
-                        this[filterName]();
-                        this.render();
-                    };
-                }(filterName));
-            }*/
+            $("#image-wrapper").hover(function() {
+                if (!pictureLoaded())
+                        return;
+                $(".original-image-cover").animate({opacity: '1'}, 500);
+            }, function() {
+                if (!pictureLoaded())
+                        return;
+                $(".original-image-cover").animate({opacity: '0'}, 500);
+            });
+
+            function saveFilteredImage() {
+                Caman('#original-image', function () {
+                    this.saturation(-20);
+                    this.render(function () {
+                        var saveLink = this.save('png');
+                        saveLink.download = 'filtered.png';
+                        saveLink.click();
+                    });
+                });
+            }
     </script>
 
 </body>
