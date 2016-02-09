@@ -81,8 +81,11 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div id="image-wrapper">
-                    <span class="original-image-cover">
+                    <span id="original-image-cover-span" class="original-image-cover">
                         <button id="save-button" onclick="saveFilteredImage()" class="btn btn-default" type="button"><h6>Save image</h6></button>
+                    </span>
+                    <span id="original-image-loading-cover-span" class="original-image-cover">
+                        <img class="img-responsive" src="images/spinner.svg" alt="">
                     </span>
                     <div class="col-sm-12 col-xs-6 vcenter">
                         <img id="original-image" class="img-responsive" src="images/empty.png" alt="">
@@ -252,7 +255,13 @@
     <!--==== Caman ====-->
     <script type="text/javascript" src="js/caman.full.min.js"></script>
 
+    <!--==== Spinners ====-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/LoadGo/1.0.1/loadgo.min.js"></script>
+
     <script type="text/javascript">
+            var imageLoading = false;
+            var imageFiltering = false;
+
             var dropbox = document.getElementById('image-wrapper');
             dropbox.addEventListener('dragenter', noopHandler, false);
             dropbox.addEventListener('dragexit', noopHandler, false);
@@ -265,10 +274,12 @@
             }
 
             function drop(evt) {
+                imageLoading = true;
                 evt.stopPropagation();
                 evt.preventDefault();
                 var image = evt.dataTransfer.files[0];
                 var reader = new FileReader();
+                $("#original-image-loading-cover-span").animate({opacity: '1'}, 500);
                 reader.onload = (function(image) {
                     return function(e) {
                         $('#original-image').removeAttr('data-caman-id');
@@ -276,6 +287,8 @@
                         originalImage.src = e.target.result;
                         Caman('#original-image', e.target.result, function() {
                             this.render();
+                            $("#original-image-loading-cover-span").animate({opacity: '0'}, 500);
+                            imageLoading = false;
                         });
                     };
                 })(image);
@@ -301,14 +314,18 @@
             for (var i = 0; i < filterCovers.length; i++) {
                 var filterCover = $('#' + filterCovers[i].id);
                 filterCover.on('click', function(e) {
-                    if (!pictureLoaded())
+                    if (!pictureLoaded() || imageLoading || imageFiltering)
                         return;
+                    imageFiltering = true;
+                    $("#original-image-loading-cover-span").animate({opacity: '1'}, 500);
                     return function(filterCoverId) {
                         Caman('#original-image', function(filterName) {
                             return function() {
                                 this.revert();
                                 this[filterName]();
                                 this.render();
+                                $("#original-image-loading-cover-span").animate({opacity: '0'}, 500);
+                                imageFiltering = false;
                             };
                         }(filterCoverId));
                     }(e.target.id == '' ? e.target.parentElement.id : e.target.id);
@@ -316,18 +333,17 @@
             }
 
             $("#image-wrapper").hover(function() {
-                if (!pictureLoaded())
+                if (!pictureLoaded() || imageLoading || imageFiltering)
                         return;
-                $(".original-image-cover").animate({opacity: '1'}, 500);
+                $("#original-image-cover-span").animate({opacity: '1'}, 500);
             }, function() {
                 if (!pictureLoaded())
                         return;
-                $(".original-image-cover").animate({opacity: '0'}, 500);
+                $("#original-image-cover-span").animate({opacity: '0'}, 500);
             });
 
             function saveFilteredImage() {
                 Caman('#original-image', function () {
-                    this.saturation(-20);
                     this.render(function () {
                         var saveLink = this.save('png');
                         saveLink.download = 'filtered.png';
