@@ -81,11 +81,11 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div id="image-wrapper">
-                    <span id="original-image-cover-span" class="original-image-cover">
-                        <button id="save-button" onclick="saveFilteredImage()" class="btn btn-default" type="button"><h6>Save image</h6></button>
-                    </span>
                     <span id="original-image-loading-cover-span" class="original-image-cover">
                         <img class="img-responsive" src="images/spinner.svg" alt="">
+                    </span>
+                    <span id="original-image-cover-span" class="original-image-cover">
+                        <button id="save-button" onclick="saveFilteredImage()" class="btn btn-default" type="button"><h6>Save image</h6></button>
                     </span>
                     <div class="col-sm-12 col-xs-6 vcenter">
                         <img id="original-image" class="img-responsive" src="images/empty.png" alt="">
@@ -255,9 +255,6 @@
     <!--==== Caman ====-->
     <script type="text/javascript" src="js/caman.full.min.js"></script>
 
-    <!--==== Spinners ====-->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/LoadGo/1.0.1/loadgo.min.js"></script>
-
     <script type="text/javascript">
             var imageLoading = false;
             var imageFiltering = false;
@@ -282,14 +279,10 @@
                 $("#original-image-loading-cover-span").animate({opacity: '1'}, 500);
                 reader.onload = (function(image) {
                     return function(e) {
-                        $('#original-image').removeAttr('data-caman-id');
                         var originalImage = document.getElementById('original-image');
                         originalImage.src = e.target.result;
-                        Caman('#original-image', e.target.result, function() {
-                            this.render();
-                            $("#original-image-loading-cover-span").animate({opacity: '0'}, 500);
-                            imageLoading = false;
-                        });
+                        $("#original-image-loading-cover-span").animate({opacity: '0'}, 500);
+                        imageLoading = false;
                     };
                 })(image);
                 reader.readAsDataURL(image);
@@ -319,15 +312,30 @@
                     imageFiltering = true;
                     $("#original-image-loading-cover-span").animate({opacity: '1'}, 500);
                     return function(filterCoverId) {
-                        Caman('#original-image', function(filterName) {
-                            return function() {
-                                this.revert();
-                                this[filterName]();
-                                this.render();
+                        $.ajax({
+                            url: "http://localhost:8080/filterImage",
+                            type: "POST",
+                            data: JSON.stringify({ image : document.getElementById('original-image').src,
+                                                   filterName : filterCoverId }),
+                            processData: false,
+                            contentType: 'application/json',
+
+                            beforeSend: function (request) {
+                                request.setRequestHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+                            },
+
+                            success: function (res) {
+                                console.log('ok');
+                                document.getElementById('original-image').src = res.filteredImage;
                                 $("#original-image-loading-cover-span").animate({opacity: '0'}, 500);
                                 imageFiltering = false;
-                            };
-                        }(filterCoverId));
+                            },
+
+                            error: function(err) {
+                                if (err)
+                                    console.log("Error receiving filtered image: " + err);
+                            }
+                        });
                     }(e.target.id == '' ? e.target.parentElement.id : e.target.id);
                 });
             }
