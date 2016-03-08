@@ -29,7 +29,7 @@ app.post('/filterImage', function(req, res) {
         type = "png";
     var base64Data = base64Data.replace(/^data:image\/png;base64,/, "");
 
-    fs.writeFile(BUFFER_PATH + type, base64Data, 'base64', function(err) {
+    fs.writeFileSync(BUFFER_PATH + type, base64Data, 'base64', function(err) {
         if (err)
             console.log('Error writing: ' + err);
     });

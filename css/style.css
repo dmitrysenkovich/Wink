@@ -249,7 +249,7 @@ font-weight: 700;
 .vcenter {
    position: absolute;
    top: 50%;
-   left:50%;
+   left: 50.5%;
    transform: translate(-50%,-50%);
 }
 
