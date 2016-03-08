@@ -5,8 +5,8 @@ var fs = require('fs');
 var app = express();
 
 var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({  limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true , limit: '50mb'}));
 app.use(cors())
 
 
@@ -15,8 +15,7 @@ var BUFFER_PATH =  "../temp/buffer.";
 
 /*
     TODO:
-    1) fix large entity fail,
-    2) fix failing many times
+    1) fix failing many times
 */
 app.post('/filterImage', function(req, res) {
     var image = req.body.image;
