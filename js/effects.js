@@ -93,11 +93,13 @@ $("#image-wrapper").hover(function() {
 });
 
 function saveFilteredImage() {
-    Caman('#original-image', function () {
-        this.render(function () {
-            var saveLink = this.save('png');
-            saveLink.download = 'filtered.png';
-            saveLink.click();
-        });
-    });
+    var type = 'png';
+    var originalImage = document.getElementById('original-image');
+    if (originalImage.src.indexOf('jpg') > -1 || originalImage.src.indexOf('jpeg') > -1)
+        type = 'jpg';
+    var url = document.getElementById('original-image').src.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+    var link  = document.createElement('a');
+    link.href = url;
+    link.download = 'filtered.' + type;
+    link.click();
 }
