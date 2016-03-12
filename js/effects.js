@@ -1,6 +1,31 @@
 var imageLoading = false;
 var imageFiltering = false;
 
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var originalCanvas = document.createElement("CANVAS");
+var originalCtx = originalCanvas.getContext("2d");
+var img = new Image();
+img.onload = start;
+img.src = "images/empty.png";
+function start() {
+    var ratio = 1;
+    if (img.height > canvas.height || img.width > canvas.width) {
+        var hRatio = canvas.width / img.width;
+        var vRatio = canvas.height / img.height;
+        ratio = Math.min(hRatio, vRatio);
+    }
+    var centerShift_x = (canvas.width - img.width*ratio) / 2;
+    var centerShift_y = (canvas.height - img.height*ratio) / 2;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0,0, img.width, img.height,
+              centerShift_x,centerShift_y,img.width*ratio, img.height*ratio);
+    originalCtx.clearRect(0, 0, originalCanvas.width, originalCanvas.height);
+    originalCanvas.width = img.width;
+    originalCanvas.height = img.height;
+    originalCtx.drawImage(img, 0, 0);
+}
+
 var dropbox = document.getElementById('image-wrapper');
 dropbox.addEventListener('dragenter', noopHandler, false);
 dropbox.addEventListener('dragexit', noopHandler, false);
@@ -21,8 +46,7 @@ function drop(evt) {
     $("#original-image-loading-cover-span").animate({opacity: '1'}, 500);
     reader.onload = (function(image) {
         return function(e) {
-            var originalImage = document.getElementById('original-image');
-            originalImage.src = e.target.result;
+            img.src = e.target.result;
             $("#original-image-loading-cover-span").animate({opacity: '0'}, 500);
             imageLoading = false;
         };
@@ -31,7 +55,7 @@ function drop(evt) {
 }
 
 function pictureLoaded() {
-    var filepathOfFileInOriginalImageTag = document.getElementById('original-image').src;
+    var filepathOfFileInOriginalImageTag = img.src;
     if (typeof filepathOfFileInOriginalImageTag != 'undefined') {
         var filenameOfFileInOriginalImageTag = getFilename(filepathOfFileInOriginalImageTag);
         if (filenameOfFileInOriginalImageTag == 'empty.png') {
@@ -57,7 +81,7 @@ for (var i = 0; i < filterCovers.length; i++) {
             $.ajax({
                 url: "http://localhost:8080/filterImage",
                 type: "POST",
-                data: JSON.stringify({ image : document.getElementById('original-image').src,
+                data: JSON.stringify({ image : img.src,
                                        filterName : filterCoverId }),
                 processData: false,
                 contentType: 'application/json',
@@ -68,7 +92,8 @@ for (var i = 0; i < filterCovers.length; i++) {
 
                 success: function (res) {
                     console.log('ok');
-                    document.getElementById('original-image').src = res.filteredImage;
+                    img.src = res.filteredImage;
+                    start();
                     $("#original-image-loading-cover-span").animate({opacity: '0'}, 500);
                     imageFiltering = false;
                 },
@@ -93,13 +118,7 @@ $("#image-wrapper").hover(function() {
 });
 
 function saveFilteredImage() {
-    var type = 'png';
-    var originalImage = document.getElementById('original-image');
-    if (originalImage.src.indexOf('jpg') > -1 || originalImage.src.indexOf('jpeg') > -1)
-        type = 'jpg';
-    var url = document.getElementById('original-image').src.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-    var link  = document.createElement('a');
-    link.href = url;
-    link.download = 'filtered.' + type;
-    link.click();
+    originalCanvas.toBlob(function(blob) {
+        saveAs(blob, "filtered.png");
+    }, 'image/png');
 }

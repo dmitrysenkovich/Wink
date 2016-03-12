@@ -72,7 +72,7 @@
         <!-- Portfolio Item Heading -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Drag image and choose filter!</h1>
+                <h1 class="page-header text-center">Drag image and choose filter!</h1>
             </div>
         </div>
         <!-- /.row -->
@@ -87,9 +87,7 @@
                     <span id="original-image-cover-span" class="original-image-cover">
                         <button id="save-button" onclick="saveFilteredImage()" class="btn btn-default" type="button"><h6>Save image</h6></button>
                     </span>
-                    <div class="col-sm-12 col-xs-6 vcenter">
-                        <img id="original-image" class="img-responsive" src="images/empty.png" alt="">
-                    </div>
+                    <canvas id="canvas" width="600" height="400">
                 </div>
             </div>
         </div>
@@ -251,6 +249,10 @@
     <!--==== Scroll and navigation plugins ====-->
     <script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
     <script type="text/javascript" src="js/jquery.appear.js"></script>
+
+    <script src="js/Blob.js"></script>
+    <script src="js/canvas-toBlob.js"></script>
+    <script src="js/FileSaver.min.js"></script>
 
     <!--==== Effects ====-->
     <script type="text/javascript" src="js/effects.js"></script>
