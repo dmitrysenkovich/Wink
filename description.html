@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Wink - Awesome Image Processor | Image And Face Description</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/portfolio-item.css" rel="stylesheet">
+
+    <!--=== Main Stylesheets ===-->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+
+    <!-- Other CSS -->
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/jquery.vegas.css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!--=== Preloader section starts ===-->
+    <section id="preloader">
+        <div class="loading-circle fa-spin"></div>
+    </section>
+    <!--=== Preloader section Ends ===-->
+
+    <!--=== Header section Starts ===-->
+    <div id="header" class="navbar navbar-fixed-top">
+        <div class="sticky-bar-wrap">
+            <div class="sticky-section effects-navbar">
+                <div id="topbar-hold" class="nav-hold container">
+                    <nav class="navbar" role="navigation">
+                        <div class="navbar-header">
+                            <a href="index.html">
+                                <img src="images/wink-logo.png"/>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--=== Header section Ends ===-->
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Portfolio Item Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header text-center">Choose image and description!</h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+            <div class="col-md-12 center-block">
+                <div id="image-wrapper">
+                    <span id="original-image-loading-cover-span" class="original-image-cover">
+                        <img class="img-responsive" src="images/spinner.svg" alt="">
+                    </span>
+                    <canvas id="canvas" width="600" height="400">
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Related Projects Row -->
+        <div id="description-buttons" class="row">
+            <div class="col-sm-4 col-sm-offset-2 col-xs-6">
+                <button id="image-description-button" onclick="getImageDescription()"
+                    class="btn btn-default center-block" type="button"><h6>Image description</h6></button>
+            </div>
+            <div class="col-sm-4 col-xs-6">
+                <button id="face-description-button" onclick="getFaceDescription()"
+                    class="btn btn-default center-block" type="button"><h6>Face description</h6></button>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+                <div class="form-group">
+                    <textarea id="tags-textarea" class="form-control center" rows="10" style="resize: none;" readonly></textarea>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!--==== Slider and Card style plugin ====-->
+    <script type="text/javascript" src="js/jquery.vegas.min.js"></script>
+
+    <!--==== Custom Script files ====-->
+    <script type="text/javascript" src="js/effects-custom.js"></script>
+
+    <!--==== Scroll and navigation plugins ====-->
+    <script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="js/jquery.appear.js"></script>
+
+    <!--==== Description ====-->
+    <script type="text/javascript" src="js/description.js"></script>
+
+</body>
+
+</html>

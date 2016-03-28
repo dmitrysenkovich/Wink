@@ -313,6 +313,11 @@ font-weight: 700;
     background: #565656 !important;
 }
 
+#description-buttons {
+    margin-top: 48px;
+    margin-bottom: 48px;
+}
+
 .header-section {
 	position:relative;
 }

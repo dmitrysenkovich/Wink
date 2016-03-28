@@ -101,6 +101,8 @@ for (var i = 0; i < filterCovers.length; i++) {
                 error: function(err) {
                     if (err)
                         console.log("Error receiving filtered image: " + err);
+                    $("#original-image-loading-cover-span").animate({opacity: '0'}, 500);
+                    imageFiltering = false;
                 }
             });
         }(e.target.id == '' ? e.target.parentElement.id : e.target.id);
