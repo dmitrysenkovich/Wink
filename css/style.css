@@ -302,6 +302,14 @@ font-weight: 700;
     height: 400px;
 }
 
+#original-image-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #CCCCCC;
+    width: 600px;
+    height: 400px;
+}
+
 #original-image {
     margin-left: auto;
     margin-right: auto;
@@ -316,6 +324,28 @@ font-weight: 700;
 #description-buttons {
     margin-top: 48px;
     margin-bottom: 48px;
+}
+
+#converted-video-div {
+    margin-bottom: 24px;
+}
+
+#jscii-element-webrtc {
+    vertical-align: middle;
+}
+
+#playback-buttons {
+    margin-bottom: 48px;
+}
+
+.section > pre { font: bold 8px/5px monospace; }
+video { width: 410px; }
+.clearfix:after {
+    content: ".";
+}
+
+#ascii-container-webrtc {
+    width: 400px;
 }
 
 .header-section {
@@ -604,7 +634,7 @@ left: calc(50% - 110px);
 	cursor: pointer;
 }
 
-#face-swap-link:hover {
+#converter-link:hover {
 	cursor: pointer;
 }
 

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Wink - Awesome Image Processor | Video To Ascii Converter</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/portfolio-item.css" rel="stylesheet">
+
+    <!--=== Main Stylesheets ===-->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+
+    <!-- Other CSS -->
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/jquery.vegas.css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!--=== Preloader section starts ===-->
+    <section id="preloader">
+        <div class="loading-circle fa-spin"></div>
+    </section>
+    <!--=== Preloader section Ends ===-->
+
+    <!--=== Header section Starts ===-->
+    <div id="header" class="navbar navbar-fixed-top">
+        <div class="sticky-bar-wrap">
+            <div class="sticky-section effects-navbar">
+                <div id="topbar-hold" class="nav-hold container">
+                    <nav class="navbar" role="navigation">
+                        <div class="navbar-header">
+                            <a href="index.html">
+                                <img src="images/wink-logo.png"/>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--=== Header section Ends ===-->
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Portfolio Item Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header text-center">Just allow us to turn your webcam on!</h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <div id="converted-video-div" class="row">
+        <div class="col-md-6">
+            <video id="jscii-element-webrtc" class="center-block" controls autoplay>
+                Your browser does not support video
+            </video>
+        </div>
+        <div class="col-md-6 center-block section clearfix">
+            <pre id="ascii-container-webrtc"></pre>
+        </div>
+    </div>
+
+    <div id="playback-buttons" class="row col-md-offset-2">
+        <div class="col-md-1">
+            <button id="play-webrtc" class="btn btn-default center-block">Start</button>
+        </div>
+        <div class="col-md-1">
+            <button id="pause-webrtc" class="btn btn-default center-block">Pause</button>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!--==== Slider and Card style plugin ====-->
+    <script type="text/javascript" src="js/jquery.vegas.min.js"></script>
+
+    <!--==== Custom Script files ====-->
+    <script type="text/javascript" src="js/effects-custom.js"></script>
+
+    <!--==== Scroll and navigation plugins ====-->
+    <script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="js/jquery.appear.js"></script>
+
+    <!--==== Jscii ====-->
+    <script type="text/javascript" src="js/jscii.js"></script>
+
+    <!--==== Converter ====-->
+    <script type="text/javascript" src="js/converter.js"></script>
+
+</body>
+
+</html>
